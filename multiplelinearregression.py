@@ -1,4 +1,3 @@
-#Regressão Linear Múltipla, uma variável independente
 #Bibliotecas
 import pandas as pd
 import numpy as np
@@ -8,8 +7,7 @@ from   sklearn.linear_model import LinearRegression
 from   sklearn.metrics import r2_score
 import statsmodels.api as sm
 
-
-
+#Conectando base de dados
 df = pd.read_csv('advertising.csv')
 df = df.drop(['Unnamed: 0'], axis=1)
 print(df)
@@ -25,7 +23,7 @@ plt.show()
 X = df['TV'].values.reshape(-1,1)
 y = df['sales'].values.reshape(-1,1)
 
-
+#Regressão Linear Simples
 reg = LinearRegression()
 reg.fit(X, y)
 f_predict = reg.predict(X) #Utilizou o método Predict paa que as previsões fossem feitas
@@ -42,19 +40,10 @@ plt.show()
 
 
 plt.figure(figsize = (10,5))
-plt.scatter(
-    df['TV'], 
-    df['sales'], 
-    c='red')
+plt.scatter(df['TV'], df['sales'], c='red')
 
 
-plt.plot(
-    df['TV'],
-    f_predict,
-    c='blue',
-    linewidth=3,
-    linestyle=':'
-)
+plt.plot( df['TV'], f_predict, c='blue', linewidth=3, linestyle=':')
 
 plt.xlabel(" ($) Gasto em propaganda de TV")
 plt.ylabel(" ($) Vendas")
@@ -71,10 +60,11 @@ print(est2.summary()) #Sumário com estatísticas descritivas
 #R² = 0.612, signfica que 61.20% da variação das Vendas é explicada pela variação da TV
 #P-Value próximo a 0, pode-se rejeitar a hipótese nula
 
-#Regressão Múltipla
+
+
+#Regressão Linear Múltipla
 Xs = df.drop(['sales'], axis=1) #Determinando colunas que serão treinadas
 y = df['sales'].values.reshape(-1,1) # Determinando colunas que será prevista
-
 
 reg = LinearRegression() #Modelo de Regressão Linear
 reg.fit(Xs, y) #Treinamento do modelo
@@ -87,9 +77,6 @@ plt.figure(figsize = (10,5))
 plt.plot(f_multpredict, c='red')
 plt.ylabel(" ($) Vendas")
 plt.show()
-
-
-
 
 #Modelo de Regressão pelo Métodos OLS ----- Usado para medir precisão do Modelo de Regressão Linear Múltipla.
 X = np.column_stack((df['TV'], df['radio'], df['newspaper']))
