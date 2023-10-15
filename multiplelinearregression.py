@@ -11,10 +11,9 @@ import statsmodels.api as sm
 
 
 df = pd.read_csv('advertising.csv')
+df = df.drop(['Unnamed: 0'], axis=1)
 print(df)
 print(df.describe())
-df.drop(['Unnamed: 0'], axis=1)
-
 
 plt.figure(figsize = (10,5))
 plt.scatter(df['TV'], df['sales'], c='red')
@@ -73,7 +72,7 @@ print(est2.summary()) #Sumário com estatísticas descritivas
 #P-Value próximo a 0, pode-se rejeitar a hipótese nula
 
 #Regressão Múltipla
-Xs = df.drop(['sales', 'Unnamed: 0'], axis=1) #Determinando colunas que serão treinadas
+Xs = df.drop(['sales'], axis=1) #Determinando colunas que serão treinadas
 y = df['sales'].values.reshape(-1,1) # Determinando colunas que será prevista
 
 
