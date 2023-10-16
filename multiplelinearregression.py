@@ -89,3 +89,30 @@ est2 = est.fit() #Treinando o modelo estatístico
 print(est2.summary()) #Sumário com estatísticas descritivas
 
 
+
+#Aumentando a precisão do modelo
+
+Xs = df.drop(['newspaper','sales'], axis=1) #Determinando colunas que serão treinadas
+y = df['sales'].values.reshape(-1,1) # Determinando colunas que será prevista
+
+reg = LinearRegression() #Modelo de Regressão Linear
+reg.fit(Xs, y) #Treinamento do modelo
+f_multpredict = reg.predict(Xs) #Prediccao do modelo
+
+print("O modeleo é: Vendas = {:.5} + {:.5}*TV + {:.5}*radio".format(reg.intercept_[0], reg.coef_[0][0], reg.coef_[0][1]))
+print('Previsão da Regressão Múltipla:', f_multpredict)
+
+plt.figure(figsize = (10,5))
+plt.plot(f_multpredict, c='red')
+plt.ylabel(" ($) Vendas")
+plt.show()
+
+#Modelo de Regressão pelo Métodos OLS ----- Usado para medir precisão do Modelo de Regressão Linear Múltipla.
+X = np.column_stack((df['TV'], df['radio']))
+y = df['sales']
+
+#Precisão do modelo
+X2 = sm.add_constant(X) #Adiciona costante ao modelo
+est = sm.OLS(y, X2) #Criando um modelo
+est2 = est.fit() #Treinando o modelo estatístico
+print(est2.summary()) #Sumário com estatísticas descritivas
