@@ -70,7 +70,7 @@ reg = LinearRegression() #Modelo de Regressão Linear
 reg.fit(Xs, y) #Treinamento do modelo
 f_multpredict = reg.predict(Xs) #Prediccao do modelo
 
-print("O modleo é: Vendas = {:.5} + {:.5}*TV + {:.5}*radio + {:.5}*newspaper".format(reg.intercept_[0], reg.coef_[0][0], reg.coef_[0][1], reg.coef_[0][2]))
+print("O modeleo é: Vendas = {:.5} + {:.5}*TV + {:.5}*radio + {:.5}*newspaper".format(reg.intercept_[0], reg.coef_[0][0], reg.coef_[0][1], reg.coef_[0][2]))
 print('Previsão da Regressão Múltipla:', f_multpredict)
 
 plt.figure(figsize = (10,5))
