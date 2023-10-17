@@ -6,6 +6,11 @@ import matplotlib.pyplot as plt
 from   sklearn.linear_model import LinearRegression
 from   sklearn.metrics import r2_score
 import statsmodels.api as sm
+from sklearn import preprocessing
+from sklearn.model_selection import train_test_split #Função de treino e teste, importada do SKlearn
+from sklearn.model_selection import KFold
+from sklearn.metrics import mean_squared_error
+from sklearn.model_selection import cross_val_score
 
 #Conectando base de dados
 df = pd.read_csv('advertising.csv')
@@ -13,12 +18,42 @@ df = df.drop(['Unnamed: 0'], axis=1)
 print(df)
 print(df.describe())
 
+#Teste de Multicolinearidade e Dimensionalidade 
+#Correlação das variáveis independentes
+print(df.corr()) #Multicolinearidade
+
+#Validção Cruzada ----- Tests como forma de analisar a precisão do modelo, quanto maior for o erro, maior a dimensionalidade(Métrica de precisão).
+x_train = df.drop(['sales'], axis=1)
+y_train = df['sales']
+
+model = LinearRegression() #Dimensionalidade
+scores = cross_val_score(model, x_train, y_train, cv=5, scoring='neg_mean_squared_error')
+mse_scores = -scores
+mean_mse = mse_scores.mean()
+print('Média dos erros: ',mean_mse) # mean_mse = 3.07 ----- Deve-se normalizar os dados, realizando feature engineering.
+#Variáveis independentes possuem dados de diferentes escalas, isso pode fazer com que o modelo não seja preciso, deve reduzir a dimensionalidade.
+
+#Feature engineering
+
+
+
+
+
+
+
+
+
+
+
+
+
 plt.figure(figsize = (10,5))
 plt.scatter(df['TV'], df['sales'], c='red')
 plt.xlabel(" ($) Gasto em propaganda de TV")
 plt.ylabel(" ($) Vendas")
 plt.show()
 
+#Construção do modelo de Regressão Linear
 #É necessário usar p .values.reshape para que possa ser definida a equação do modelo de regressão linear.
 X = df['TV'].values.reshape(-1,1)
 y = df['sales'].values.reshape(-1,1)
