@@ -57,4 +57,31 @@ f_multpredict = reg.predict(X) #Prediccao do modelo
 f_multpredict = f_multpredict.flatten()
 mean_predict = f_multpredict.mean()
 print(f_multpredict)
+print(mean_predict)
 print("O modelo é: Vendas = {:.5} + {:.5}*TV".format(reg.intercept_[0], reg.coef_[0][0]))
+
+plt.figure(figsize = (10,5))
+plt.plot(f_multpredict, c='orange')
+plt.axhline(y=mean_predict, c='blue',linestyle='-', label='Média')
+plt.ylabel('Vendas (em Milhões de US$)')
+plt.show()
+
+#TV
+plt.figure(figsize = (10,5))
+plt.scatter(
+    df['TV'], 
+    df['sales'], 
+    c='red')
+
+
+plt.plot(
+    df['TV'],
+    f_multpredict,
+    c='blue',
+    linewidth=3,
+    linestyle=':'
+)
+
+plt.xlabel(" ($) Gasto em propaganda de TV")
+plt.ylabel(" ($) Vendas")
+plt.show()
