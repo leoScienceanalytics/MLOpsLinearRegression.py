@@ -68,20 +68,8 @@ plt.show()
 
 #TV
 plt.figure(figsize = (10,5))
-plt.scatter(
-    df['TV'], 
-    df['sales'], 
-    c='red')
-
-
-plt.plot(
-    df['TV'],
-    f_multpredict,
-    c='blue',
-    linewidth=3,
-    linestyle=':'
-)
-
+plt.scatter(df['TV'], df['sales'], c='red')
+plt.plot(df['TV'], f_multpredict, c='blue', linewidth=3, linestyle=':')
 plt.xlabel(" ($) Gasto em propaganda de TV")
 plt.ylabel(" ($) Vendas")
 plt.show()
