@@ -82,7 +82,7 @@ print(est2.summary()) #Sumário com estatísticas descritivas
 
 
 
-
+#Previsão ------- Somente, quando o modelo estiver ajustado e preciso.
 #Regressão Linear Múltipla
 Xs = df.drop(['sales'], axis=1) #Determinando colunas que serão treinadas
 y = df['sales'].values.reshape(-1,1) # Determinando colunas que será prevista
