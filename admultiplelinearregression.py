@@ -39,6 +39,8 @@ mse_scores = -scores
 mean_mse = mse_scores.mean()
 print('Média dos erros: ',mean_mse) # mean_mse = 3.07
 
+bias = mean_mse**0.5
+print('Bias: ', bias)
 
 #Construção do modelo estatísico 
 #Modelo de Regressão pelo Métodos OLS ----- Usado para medir precisão do Modelo de Regressão Linear Múltipla.
