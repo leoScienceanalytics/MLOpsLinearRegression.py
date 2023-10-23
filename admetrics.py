@@ -51,7 +51,7 @@ mse = mean_squared_error(y_test, y_pred)
 
 
 # Calcular o viés e a variância
-bias = np.mean(y_test - y_pred )
+bias = np.mean(y_test - y_pred)
 variance = np.mean((y_pred - y_pred.mean()) ** 2)
 
 print(f'Precisão: {score} %')
