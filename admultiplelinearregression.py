@@ -32,15 +32,15 @@ y_train = df['sales']
 
 
 num_iterations = 4
-quartil_size = len(x_train) // 4
-partitions = [x_train[i:i+quartil_size] for i in range(0, len(x_train), quartil_size)]
-target_predictions = [y_train[i:i+quartil_size] for i in range(0, len(y_train), quartil_size)]
+quartil_size = len(x_train) // 4 # = 50
+partitions = [x_train[i:i+quartil_size] for i in range(0, len(x_train), quartil_size)] #Cria uma lista que contém todos os Quartis, dividos por 4 (25%) ---- X
+target_predictions = [y_train[i:i+quartil_size] for i in range(0, len(y_train), quartil_size)] #Cria uma lista que contém todos os Quartis, divididos por 4 (25%) ---- Y 
 
-mse_scoretrain ,mse_scorestest = [], []
+mse_scoretrain ,mse_scorestest = [], [] #Cria dicionários vazios
 
-for i in range(num_iterations):
+for i in range(num_iterations): #Cria um laço que se repete 4 vezes.
     
-    x_test, y_test = partitions[i], target_predictions[i]
+    x_test, y_test = partitions[i], target_predictions[i] #Chama X(partitions[i]) e Y(target_predictions[1]) de variáveis de teste.
     x_train = np.vstack(partitions[:i] + partitions[i+1:])
     y_train = np.concatenate(target_predictions[:i] + target_predictions[i+1:])
     
@@ -49,7 +49,9 @@ for i in range(num_iterations):
     y_predtrain = modelo.predict(x_train) #Previsão do treino
     y_predtest = modelo.predict(x_test) #Previsão do Teste
     y_pred = modelo.predict(x_test) 
-    y_pred = pd.DataFrame(y_pred) #Previsão do Modelo  
+    y_pred = pd.DataFrame(y_pred)#Previsão do Modelo  
+ 
+    
     
     #Erros Quadráticos Médios
     msetrain = mean_squared_error(y_train, y_predtrain) #Erro Quadrático médio do Treino
