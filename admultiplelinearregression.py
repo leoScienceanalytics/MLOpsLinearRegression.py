@@ -26,7 +26,7 @@ print('DataFrame var indpend: ',df_nosales)
 print(df_nosales.corr()) #Multicolinearidade -------- Não há multicolinearidade.
 
 
-#Validção Cruzada ----- Tests como forma de analisar a precisão do modelo, quanto maior for o erro, maior a dimensionalidade(Métrica de precisão).
+#CrossValidation ----- Tests como forma de analisar a precisão do modelo, quanto maior for o erro, maior a dimensionalidade(Métrica de precisão).
 x_train = df_nosales
 y_train = df['sales']
 
@@ -58,7 +58,7 @@ for i in range(num_iterations): #Cria um laço que se repete 4 vezes.
     msetest = mean_squared_error(y_test, y_predtest) #Erro Quadrático médio do Teste
     mse_scoretrain.append(msetrain)
     mse_scorestest.append(msetest)
-    #Variância de um Valor baixo ----- 0.21
+    #Variância deu um Valor baixo ----- 0.21
     
     
     #Construção do modelo estatísico 
