@@ -46,16 +46,18 @@ for i in range(num_iterations):
     
     modelo = LinearRegression()
     modelo.fit(x_train, y_train)
-    y_predtrain = modelo.predict(x_train)
-    y_predtest = modelo.predict(x_test)
-    y_pred = modelo.predict(x_test)
-    y_pred = pd.DataFrame(y_pred)   
+    y_predtrain = modelo.predict(x_train) #Previsão do treino
+    y_predtest = modelo.predict(x_test) #Previsão do Teste
+    y_pred = modelo.predict(x_test) 
+    y_pred = pd.DataFrame(y_pred) #Previsão do Modelo  
     
     #Erros Quadráticos Médios
-    msetrain = mean_squared_error(y_train, y_predtrain)
-    msetest = mean_squared_error(y_test, y_predtest)
+    msetrain = mean_squared_error(y_train, y_predtrain) #Erro Quadrático médio do Treino
+    msetest = mean_squared_error(y_test, y_predtest) #Erro Quadrático médio do Teste
     mse_scoretrain.append(msetrain)
     mse_scorestest.append(msetest)
+    #Variância de um Valor baixo ----- 0.21
+    
     
     #Construção do modelo estatísico 
     #Modelo de Regressão pelo Métodos OLS ----- Usado para medir precisão do Modelo de Regressão Linear Múltipla.
