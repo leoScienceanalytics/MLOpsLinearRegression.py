@@ -6,9 +6,9 @@ import matplotlib.pyplot as plt
 from   sklearn.linear_model import LinearRegression
 from   sklearn.metrics import r2_score
 import statsmodels.api as sm
-from sklearn.model_selection import KFold
 from sklearn.metrics import mean_squared_error
-from sklearn.model_selection import cross_val_score
+
+
 
 #Conectando base de dados
 df = pd.read_csv('advertising.csv')
