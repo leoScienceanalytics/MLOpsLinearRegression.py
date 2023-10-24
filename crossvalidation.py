@@ -2,6 +2,10 @@ from sklearn.model_selection import cross_val_score
 from sklearn.model_selection import KFold
 from   sklearn.linear_model import LinearRegression
 
+x = []
+y = []
+
+
 regressor = LinearRegression()
 
 seed = 1234567
