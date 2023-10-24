@@ -20,9 +20,6 @@ print(df.describe())
 df_nosales = df.drop(['sales'], axis=1)
 print('DataFrame var indpend: ',df_nosales)
 
-
-
-
 #Modelo estatístico e métricas de precisão (3 Var independ.)
 #Teste de Multicolinearidade e Dimensionalidade 
 #Correlação das variáveis independentes
@@ -33,41 +30,55 @@ print(df_nosales.corr()) #Multicolinearidade -------- Não há multicolinearidad
 x_train = df_nosales
 y_train = df['sales']
 
-model = LinearRegression() #Dimensionalidade
-scores = cross_val_score(model, x_train, y_train, cv=5, scoring='neg_mean_squared_error')
-mse_scores = -scores
-mean_mse = mse_scores.mean()
-print('Média dos erros: ',mean_mse) # mean_mse = 3.07
 
-bias = mean_mse**0.5
-print('Bias: ', bias)
+num_iterations = 4
+quartil_size = len(x_train) // 4
+partitions = [x_train[i:i+quartil_size] for i in range(0, len(x_train), quartil_size)]
+target_predictions = [y_train[i:i+quartil_size] for i in range(0, len(y_train), quartil_size)]
 
-#Construção do modelo estatísico 
-#Modelo de Regressão pelo Métodos OLS ----- Usado para medir precisão do Modelo de Regressão Linear Múltipla.
-X = df_nosales
-y = df['sales']
-X2 = sm.add_constant(X) #Adiciona costante ao modelo
-est = sm.OLS(y, X2) #Criando um mo delo
-est2 = est.fit() #Treinando o modelo estatístico
-print(est2.summary()) #Sumário com estatísticas descritivas
+mse_scoretrain ,mse_scorestest = [], []
 
-#Previsão ------- Somente, quando o modelo estiver ajustado e preciso.
-#Regressão Linear Múltipla
-Xs = df_nosales #Determinando colunas que serão treinadas
-y = df['sales'].values.reshape(-1,1) # Determinando colunas que será prevista
+for i in range(num_iterations):
+    
+    x_test, y_test = partitions[i], target_predictions[i]
+    x_train = np.vstack(partitions[:i] + partitions[i+1:])
+    y_train = np.concatenate(target_predictions[:i] + target_predictions[i+1:])
+    
+    modelo = LinearRegression()
+    modelo.fit(x_train, y_train)
+    y_predtrain = modelo.predict(x_train)
+    y_predtest = modelo.predict(x_test)
+    y_pred = modelo.predict(x_test)
+    y_pred = pd.DataFrame(y_pred)   
+    
+    #Erros Quadráticos Médios
+    msetrain = mean_squared_error(y_train, y_predtrain)
+    msetest = mean_squared_error(y_test, y_predtest)
+    mse_scoretrain.append(msetrain)
+    mse_scorestest.append(msetest)
+    
+    #Construção do modelo estatísico 
+    #Modelo de Regressão pelo Métodos OLS ----- Usado para medir precisão do Modelo de Regressão Linear Múltipla.
+    X = x_train
+    y = y_train
+    X2 = sm.add_constant(X) #Adiciona costante ao modelo
+    est = sm.OLS(y, X2) #Criando um mo delo
+    est2 = est.fit() #Treinando o modelo estatístico
+    print(est2.summary()) #Sumário com estatísticas descritivas
+    print("O modelo é: Vendas = {:.5} + {:.5}*TV + {:.5}*radio + {:.5}*newspaper".format(modelo.intercept_, modelo.coef_[0], modelo.coef_[1], modelo.coef_[2]))
 
-reg = LinearRegression() #Modelo de Regressão Linear
-reg.fit(Xs, y) #Treinamento do modelo
-f_multpredict = reg.predict(Xs) #Prediccao do modelo
-f_multpredict = f_multpredict.flatten()
-mean_predict = f_multpredict.mean()
+mse_scoretrain = pd.DataFrame(mse_scoretrain)
+mse_scorestest = pd.DataFrame(mse_scorestest) 
 
-print("O modelo é: Vendas = {:.5} + {:.5}*TV + {:.5}*radio + {:.5}*newspaper".format(reg.intercept_[0], reg.coef_[0][0], reg.coef_[0][1], reg.coef_[0][2]))
-print('Previsão da Regressão Múltipla:', f_multpredict)
-print('Média das previsões: ',mean_predict)
+mean_msetrain = np.mean(mse_scoretrain)
+mean_msetest = np.mean(mse_scorestest)
+print('Média dos Erros Quadrados de Treino: ', mean_msetrain)
+print('Média dos Erros Quadrados de Teste: ', mean_msetest)
+#Possuem Baixa Variância, além disso, Erros(Bias) baixo nos dois modelo. Logo, o modelo é ótimo.
+
+print('Previsão de Vendas: ', y_pred)
 
 plt.figure(figsize = (10,5))
-plt.plot(f_multpredict, c='orange')
-plt.axhline(y=mean_predict, c='blue',linestyle='-', label='Média')
+plt.plot(y_pred, c='orange')
 plt.ylabel('Vendas (em Milhões de US$)')
 plt.show()
