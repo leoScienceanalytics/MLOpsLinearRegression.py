@@ -36,7 +36,7 @@ regressor = LinearRegression()
 regressor.fit(x[train], y[train])
 y_predtrain = regressor.predict(x[train])
 y_predtest= regressor.predict(x[test])
-_
+
 scorestrain = cross_val_score(regressor, x[train], y[train], cv=kf, scoring='neg_mean_squared_error')
 scorestest = cross_val_score(regressor, x[test], y[test], cv=kf, scoring='neg_mean_squared_error')
 
