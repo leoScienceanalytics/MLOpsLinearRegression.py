@@ -36,7 +36,7 @@ quartil_size = len(x_train) // 4 # = 50
 partitions = [x_train[i:i+quartil_size] for i in range(0, len(x_train), quartil_size)] #Cria uma lista que contém todos os Quartis, dividos por 4 (25%) ---- X
 target_predictions = [y_train[i:i+quartil_size] for i in range(0, len(y_train), quartil_size)] #Cria uma lista que contém todos os Quartis, divididos por 4 (25%) ---- Y 
 
-mse_scoretrain ,mse_scorestest = [], [] #Cria dicionários vazios
+mse_scoretrain ,mse_scoretest = [], [] #Cria dicionários vazios
 
 for i in range(num_iterations): #Cria um laço que se repete 4 vezes.
     
@@ -55,9 +55,9 @@ for i in range(num_iterations): #Cria um laço que se repete 4 vezes.
     
     #Erros Quadráticos Médios
     msetrain = mean_squared_error(y_train, y_predtrain) #Erro Quadrático médio do Treino
-    msetest = mean_squared_error(y_test, y_pred) #Erro Quadrático médio do Teste
+    msetest = mean_squared_error(y_test, y_predtest) #Erro Quadrático médio do Teste
     mse_scoretrain.append(msetrain)
-    mse_scorestest.append(msetest)
+    mse_scoretest.append(msetest)
     #Variância deu um Valor baixo ----- 0.21
     
     
@@ -72,8 +72,9 @@ for i in range(num_iterations): #Cria um laço que se repete 4 vezes.
     print("O modelo é: Vendas = {:.5} + {:.5}*TV + {:.5}*radio + {:.5}*newspaper".format(modelo.intercept_, modelo.coef_[0], modelo.coef_[1], modelo.coef_[2]))
 
 mse_scoretrain = pd.DataFrame(mse_scoretrain)
-mse_scorestest = pd.DataFrame(mse_scorestest) 
-
+mse_scorestest = pd.DataFrame(mse_scoretest) 
+print('Erros Quadrados de Treino: ', mse_scoretrain)
+print('Erros Quadrados de Teste: ', mse_scoretest)
 mean_msetrain = np.mean(mse_scoretrain)
 mean_msetest = np.mean(mse_scorestest)
 print('Média dos Erros Quadrados de Treino: ', mean_msetrain)
