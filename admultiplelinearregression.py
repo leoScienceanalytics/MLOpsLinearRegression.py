@@ -48,14 +48,15 @@ for i in range(num_iterations): #Cria um laço que se repete 4 vezes.
     modelo = LinearRegression()
     modelo.fit(x_train, y_train)
     y_predtrain = modelo.predict(x_train) #Previsão do treino
-    y_predtest = modelo.predict(x_test) #Previsão do Teste 
-    y_pred = pd.DataFrame(y_pred)#Previsão do Modelo  
+    
+    y_pred = modelo.predict(x_test) #Previsão do Teste 
+      
  
     
     
     #Erros Quadráticos Médios
     msetrain = mean_squared_error(y_train, y_predtrain) #Erro Quadrático médio do Treino
-    msetest = mean_squared_error(y_test, y_predtest) #Erro Quadrático médio do Teste
+    msetest = mean_squared_error(y_test, y_pred) #Erro Quadrático médio do Teste
     mse_scoretrain.append(msetrain)
     mse_scoretest.append(msetest)
     #Variância deu um Valor baixo ----- 0.21
@@ -71,14 +72,18 @@ for i in range(num_iterations): #Cria um laço que se repete 4 vezes.
     print(est2.summary()) #Sumário com estatísticas descritivas
     print("O modelo é: Vendas = {:.5} + {:.5}*TV + {:.5}*radio + {:.5}*newspaper".format(modelo.intercept_, modelo.coef_[0], modelo.coef_[1], modelo.coef_[2]))
 
-mse_scoretrain = pd.DataFrame(mse_scoretrain)
-mse_scorestest = pd.DataFrame(mse_scoretest) 
+
 print('Erros Quadrados de Treino: ', mse_scoretrain)
 print('Erros Quadrados de Teste: ', mse_scoretest)
+mse_scoretrain = pd.DataFrame(mse_scoretrain)
+mse_scoretest = pd.DataFrame(mse_scoretest)
+
 mean_msetrain = np.mean(mse_scoretrain)
-mean_msetest = np.mean(mse_scorestest)
+mean_msetest = np.mean(mse_scoretest)
 print('Média dos Erros Quadrados de Treino: ', mean_msetrain)
 print('Média dos Erros Quadrados de Teste: ', mean_msetest)
+variance = mse_scoretrain - mse_scoretest
+print('Variância: ', variance.mean())
 #Possuem Baixa Variância, além disso, Erros(Bias) baixo nos dois modelo. Logo, o modelo é ótimo.
 
 print('Previsão de Vendas: ', y_pred)
