@@ -44,18 +44,18 @@ for i in range(num_iterations): #Cria um laço que se repete 4 vezes.
     x_train = np.vstack(partitions[:i] + partitions[i+1:])
     y_train = np.concatenate(target_predictions[:i] + target_predictions[i+1:])
     
+    
     modelo = LinearRegression()
     modelo.fit(x_train, y_train)
     y_predtrain = modelo.predict(x_train) #Previsão do treino
-    y_predtest = modelo.predict(x_test) #Previsão do Teste
-    y_pred = modelo.predict(x_test) 
+    y_predtest = modelo.predict(x_test) #Previsão do Teste 
     y_pred = pd.DataFrame(y_pred)#Previsão do Modelo  
  
     
     
     #Erros Quadráticos Médios
     msetrain = mean_squared_error(y_train, y_predtrain) #Erro Quadrático médio do Treino
-    msetest = mean_squared_error(y_test, y_predtest) #Erro Quadrático médio do Teste
+    msetest = mean_squared_error(y_test, y_pred) #Erro Quadrático médio do Teste
     mse_scoretrain.append(msetrain)
     mse_scorestest.append(msetest)
     #Variância deu um Valor baixo ----- 0.21
