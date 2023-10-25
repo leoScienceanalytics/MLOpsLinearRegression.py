@@ -34,13 +34,19 @@ for train, test in kf.split(y):
  
 regressor = LinearRegression()
 regressor.fit(x[train], y[train])
-predict= regressor.predict(x[test])
+y_predtrain = regressor.predict(x[train])
+y_predtest= regressor.predict(x[test])
+_
+scorestrain = cross_val_score(regressor, x[train], y[train], cv=kf, scoring='neg_mean_squared_error')
+scorestest = cross_val_score(regressor, x[test], y[test], cv=kf, scoring='neg_mean_squared_error')
 
-scores = cross_val_score(regressor, x, y, cv=kf, scoring='neg_mean_squared_error')
-mse_scores=-scores
-mean_mse= mse_scores.mean()
-print(mse_scores)
-print(mean_mse)
+mse_scorestrain=-scorestrain
+mse_scorestest=-scorestest
+
+mean_msetrain= mse_scorestrain.mean()
+mean_msetest = mse_scorestest.mean()
+print('MSE TRAIN: ', mean_msetrain)
+print('MSE TEST: ',mean_msetest)
 
 X = df[colunas].values
 y = df['sales'].values
