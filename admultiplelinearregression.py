@@ -17,7 +17,7 @@ print(df)
 print(df.describe())
 
 #DataFrame Variáveis independentes
-df_nosales = df.drop(['sales'], axis=1)
+df_nosales = df.drop(['newspaper','sales'], axis=1)
 print('DataFrame var indpend: ',df_nosales)
 
 #Modelo estatístico e métricas de precisão (3 Var independ.)
@@ -70,7 +70,7 @@ for i in range(num_iterations): #Cria um laço que se repete 4 vezes.
     est = sm.OLS(y, X2) #Criando um mo delo
     est2 = est.fit() #Treinando o modelo estatístico
     print(est2.summary()) #Sumário com estatísticas descritivas
-    print("O modelo é: Vendas = {:.5} + {:.5}*TV + {:.5}*radio + {:.5}*newspaper".format(modelo.intercept_, modelo.coef_[0], modelo.coef_[1], modelo.coef_[2]))
+    print("O modelo é: Vendas = {:.5} + {:.5}*TV + {:.5}*radio".format(modelo.intercept_, modelo.coef_[0], modelo.coef_[1]))
 
 
 print('Erros Quadrados de Treino: ', mse_scoretrain)
