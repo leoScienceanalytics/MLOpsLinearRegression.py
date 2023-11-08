@@ -32,7 +32,7 @@ y_train = df['sales']
 
 
 num_iterations = 4
-quartil_size = len(x_train) // 4 # = 50
+quartil_size = len(x_train) // num_iterations # = 50
 partitions = [x_train[i:i+quartil_size] for i in range(0, len(x_train), quartil_size)] #Cria uma lista que contém todos os Quartis, dividos por 4 (25%) ---- X
 target_predictions = [y_train[i:i+quartil_size] for i in range(0, len(y_train), quartil_size)] #Cria uma lista que contém todos os Quartis, divididos por 4 (25%) ---- Y 
 
