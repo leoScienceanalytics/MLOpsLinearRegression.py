@@ -13,14 +13,13 @@ from sklearn.metrics import mean_squared_error
 #Conectando base de dados
 df = pd.read_csv('advertising.csv')
 df = df.drop(['Unnamed: 0'], axis=1)
-print(df)
 print(df.describe())
 
 #DataFrame Variáveis independentes
 df_nosales = df.drop(['newspaper','sales'], axis=1)
 print('DataFrame var indpend: ',df_nosales)
 
-#Modelo estatístico e métricas de precisão (3 Var independ.)
+#Modelo estatístico e métricas de precisão (2 Var independ.)
 #Teste de Multicolinearidade e Dimensionalidade 
 #Correlação das variáveis independentes
 print(df_nosales.corr()) #Multicolinearidade -------- Não há multicolinearidade.
@@ -50,9 +49,6 @@ for i in range(num_iterations): #Cria um laço que se repete 4 vezes.
     y_predtrain = modelo.predict(x_train) #Previsão do treino
     
     y_pred = modelo.predict(x_test) #Previsão do Teste 
-      
- 
-    
     
     #Erros Quadráticos Médios
     msetrain = mean_squared_error(y_train, y_predtrain) #Erro Quadrático médio do Treino
