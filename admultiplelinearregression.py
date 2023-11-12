@@ -56,7 +56,7 @@ for i in range(num_iterations): #Cria um laço que se repete 4 vezes.
     msetest = mean_squared_error(y_test, y_pred) #Erro Quadrático médio do Teste
     mse_scoretrain.append(msetrain)
     mse_scoretest.append(msetest)
-    #Variância deu um Valor baixo ----- 0.21
+    
     
     
     #Construção do modelo estatísico 
