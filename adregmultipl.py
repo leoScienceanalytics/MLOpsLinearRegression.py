@@ -19,7 +19,7 @@ print(df.describe())
 #DataFrame Variáveis independentes
 df_nosales = df.drop(['newspaper','sales'], axis=1)
 print('DataFrame var indpend: ',df_nosales)
-
+ 
 #Modelo estatístico e métricas de precisão (2 Var independ.)
 #Teste de Multicolinearidade e Dimensionalidade 
 #Correlação das variáveis independentes
@@ -42,9 +42,9 @@ for i in range(num_iterations): #Cria um laço que se repete 4 vezes.
     
     x_test, y_test = partitions[i], target_predictions[i] #Chama X(partitions[i]) e Y(target_predictions[1]) de variáveis de teste.
     x_train = np.vstack(partitions[:i] + partitions[i+1:])
-    y_train = np.concatenate(target_predictions[:i] + target_predictions[i+1:])
+    y_train = np.concatenate(target_predictions[:i] + target_predictions[i+1:]) #Validação vai até aqui.
     
-    
+    #Construção do modelo de regressão linear
     modelo = LinearRegression()
     modelo.fit(x_train, y_train)
     y_predtrain = modelo.predict(x_train) #Previsão do treino
