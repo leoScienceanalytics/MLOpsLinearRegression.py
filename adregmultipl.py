@@ -9,7 +9,7 @@ import statsmodels.api as sm
 from sklearn.metrics import mean_squared_error
 
 
-#zlkxvelfnvwekrgw rui
+
 
 #Conectando base de dados
 df = pd.read_csv('advertising.csv')
