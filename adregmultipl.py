@@ -26,15 +26,15 @@ print('DataFrame var indpend: ',df_nosales)
 print(df_nosales.corr()) #Multicolinearidade -------- Não há multicolinearidade.
 
 
-#CrossValidation ----- Tests como forma de analisar a precisão do modelo, quanto maior for o erro, maior a dimensionalidade(Métrica de precisão).
+#Validação Cruzada
 x_train = df_nosales
 y_train = df['sales']
 
 
 num_iterations = 4
 quartil_size = len(x_train) // num_iterations # = 50
-partitions = [x_train[i:i+quartil_size] for i in range(0, len(x_train), quartil_size)] #Cria uma lista que contém todos os Quartis, dividos por 4 (25%) ---- X
-target_predictions = [y_train[i:i+quartil_size] for i in range(0, len(y_train), quartil_size)] #Cria uma lista que contém todos os Quartis, divididos por 4 (25%) ---- Y 
+partitions = [x_train[i:i+quartil_size] for i in range(0, len(x_train), quartil_size)]
+target_predictions = [y_train[i:i+quartil_size] for i in range(0, len(y_train), quartil_size)] 
 
 mse_scoretrain ,mse_scoretest = [], [] #Cria dicionários vazios
 
@@ -56,10 +56,7 @@ for i in range(num_iterations): #Cria um laço que se repete 4 vezes.
     msetest = mean_squared_error(y_test, y_pred) #Erro Quadrático médio do Teste
     mse_scoretrain.append(msetrain)
     mse_scoretest.append(msetest)
-    
-    
-    
-    #Construção do modelo estatísico 
+     
     #Modelo de Regressão pelo Métodos OLS ----- Usado para medir precisão do Modelo de Regressão Linear Múltipla.
     X = x_train
     y = y_train
