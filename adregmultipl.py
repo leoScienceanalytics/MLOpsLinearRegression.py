@@ -34,15 +34,15 @@ y_train = df['sales']
 num_iterations = 4
 quartil_size = len(x_train) // num_iterations # = 50
 partitions = [x_train[i:i+quartil_size] for i in range(0, len(x_train), quartil_size)]
-target_predictions = [y_train[i:i+quartil_size] for i in range(0, len(y_train), quartil_size)] 
+target_partitions = [y_train[i:i+quartil_size] for i in range(0, len(y_train), quartil_size)] 
 
 mse_scoretrain ,mse_scoretest = [], [] #Cria dicionários vazios
 
 for i in range(num_iterations): #Cria um laço que se repete 4 vezes.
     
-    x_test, y_test = partitions[i], target_predictions[i] #Chama X(partitions[i]) e Y(target_predictions[1]) de variáveis de teste.
+    x_test, y_test = partitions[i], target_partitions[i] #Chama X(partitions[i]) e Y(target_predictions[1]) de variáveis de teste.
     x_train = np.vstack(partitions[:i] + partitions[i+1:])
-    y_train = np.concatenate(target_predictions[:i] + target_predictions[i+1:]) #Validação vai até aqui.
+    y_train = np.concatenate(target_partitions[:i] + target_partitions[i+1:]) #Validação vai até aqui.
     
     #Construção do modelo de regressão linear
     modelo = LinearRegression()
