@@ -8,13 +8,13 @@ from sklearn.metrics import mean_squared_error
 
 
 
-class LeitorDados:
+class leitorDados:
     def __init__(self, arquivo): #Iniciar o construtor
         self.arquivo = arquivo
         self.dados = None
         self.partitions = []
         self.target_partitions = []
-        
+                    
     def ler_dados(self): #Ler os dados
         try:
             self.dados = pd.read_csv(self.arquivo)
