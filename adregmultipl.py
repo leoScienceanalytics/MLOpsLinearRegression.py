@@ -1,7 +1,6 @@
 #Bibliotecas
 import pandas as pd
 import numpy as np
-import seaborn as sns
 import matplotlib.pyplot as plt
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import r2_score
@@ -82,7 +81,46 @@ print('Variância: ', variance.mean())
 
 print('Previsão de Vendas: ', y_pred)
 
+x = range(0, 30) #Argumento de períodos
+
+#Conjuntos
+y_train = pd.DataFrame(y_train) #Treino
+y_train30 = y_train.head(30)
+
+
+y_test = pd.DataFrame(y_test)#Teste
+y_test30 = y_test.head(30)
+y_test30.reset_index()
+
+
+
+#Predições
+y_predtrain = pd.DataFrame(y_predtrain)
+y_predtrain30 = y_predtrain.head(30)
+
+
+y_pred = pd.DataFrame(y_pred)
+y_pred30 = y_pred.head(30)
+
+
+
+
+#Gráficos
+
+#Gráfico Treino
+plt.figure(figsize = (10, 5))
+plt.plot(y_predtrain30, c='orange')
+plt.plot(x, y_train30, color='navy')
+plt.scatter(x, y_train30, color='navy', marker='o')
+plt.ylabel('Vendas (em Milhões de US$)')
+plt.title('Predições(Treino) x Conjunto de Treino')
+plt.show()
+
+#Gráfico Teste
 plt.figure(figsize = (10,5))
-plt.plot(y_pred, c='orange')
+plt.plot(y_pred30, c='orange')
+plt.plot(x, y_test30, color='red')
+plt.scatter(x, y_test30, color='red', marker='o')
+plt.title('Predições(Teste) x Conjunto de Teste')
 plt.ylabel('Vendas (em Milhões de US$)')
 plt.show()
